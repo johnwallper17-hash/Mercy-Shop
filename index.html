@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Metu Gebeya</title>
+<style>
+  :root {
+    --bg: #0e1511;
+    --card: #141d18;
+    --border: #2a3630;
+    --green: #3bb273;
+    --green-dark: #2d8f5c;
+    --text: #e8f0ea;
+    --text-dim: #9fb3a8;
+    --danger: #e05d5d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  header {
+    background: linear-gradient(135deg, #1a5c37, #0e1511);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  header .dot {
+    width: 10px; height: 10px; border-radius: 50%; background: #f2b200;
+  }
+  header h1 { font-size: 18px; margin: 0; flex: 1; }
+
+  main { max-width: 420px; margin: 0 auto; padding: 24px 20px; }
+
+  .view { display: none; }
+  .view h2 { font-size: 22px; margin-bottom: 20px; }
+
+  label { display: block; font-size: 14px; margin-bottom: 6px; color: var(--text-dim); }
+  input, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 15px;
+  }
+  textarea { min-height: 90px; resize: vertical; }
+
+  button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--green); color: white; }
+  .btn-primary:hover { background: var(--green-dark); }
+  .btn-secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+  .btn-danger { background: var(--danger); color: white; }
+
+  .link-row { text-align: center; font-size: 14px; color: var(--text-dim); margin-top: 4px; }
+  .link-row a { color: var(--green); text-decoration: none; cursor: pointer; }
+
+  .error {
+    display: none;
+    background: rgba(224, 93, 93, 0.15);
+    border: 1px solid var(--danger);
+    color: #ff9d9d;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .account-head { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--green); display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 700;
+  }
+  .account-head .email { color: var(--text-dim); font-size: 13px; }
+  .account-head .status { color: #f2b200; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="dot"></div>
+  <h1>Mercy Market</h1>
+</header>
+
+<main>
+
+  <!-- LOGIN -->
+  <section id="login-view" class="view" style="display:block;">
+    <h2>Log in</h2>
+    <div id="login-error" class="error"></div>
+    <form id="login-form">
+      <label>Email</label>
+      <input type="email" id="login-email" required />
+      <label>Password</label>
+      <input type="password" id="login-password" required />
+      <button type="submit" class="btn-primary">Log in</button>
+    </form>
+    <button type="button" class="btn-secondary" id="go-signup">New account</button>
+    <div class="link-row"><a id="go-forgot">Forgot password?</a></div>
+  </section>
+
+  <!-- SIGN UP -->
+  <section id="signup-view" class="view">
+    <h2>Create account</h2>
+    <div id="signup-error" class="error"></div>
+    <form id="signup-form">
+      <label>Shop name</label>
+      <input type="text" id="signup-shopname" placeholder="e.g. Mihretab Shop" />
+      <label>Email</label>
+      <input type="email" id="signup-email" required />
+      <label>Password</label>
+      <input type="password" id="signup-password" required minlength="6" />
+      <button type="submit" class="btn-primary">Sign up</button>
+    </form>
+    <div class="link-row">Already have an account? <a id="go-login-from-signup">Log in</a></div>
+  </section>
+
+  <!-- FORGOT PASSWORD -->
+  <section id="forgot-view" class="view">
+    <h2>Reset password</h2>
+    <div id="forgot-error" class="error"></div>
+    <form id="forgot-form">
+      <label>Email</label>
+      <input type="email" id="forgot-email" required />
+      <button type="submit" class="btn-primary">Send reset link</button>
+    </form>
+    <div class="link-row"><a id="go-login-from-forgot">Back to log in</a></div>
+  </section>
+
+  <!-- ACCOUNT -->
+  <section id="account-view" class="view">
+    <div class="account-head">
+      <div class="avatar">👤</div>
+      <div>
+        <div id="account-email" style="font-weight:600;"></div>
+        <div id="account-status" class="status"></div>
+      </div>
+    </div>
+
+    <label>Shop name</label>
+    <input type="text" id="account-shopname" />
+
+    <label>About the shop</label>
+    <textarea id="account-about"></textarea>
+
+    <button type="button" class="btn-primary" id="save-profile-btn">Save</button>
+    <button type="button" class="btn-secondary" id="logout-btn">Log out</button>
+  </section>
+
+</main>
+
+<!-- Supabase JS client (pinned version) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>
